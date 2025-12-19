@@ -199,7 +199,7 @@ export const transferAmount = async (req: UserRequest, res: Response) => {
     try {
         session.startTransaction()
         const userId = req.user?.id;
-        const { to } = req.body
+        const { to, tag } = req.body
         const amount = Number(req.body.amount)
         console.log("Transfering ", amount)
         if (!userId) {
@@ -258,6 +258,7 @@ export const transferAmount = async (req: UserRequest, res: Response) => {
                     mode: "TRANSFER",
                     from: userId,
                     to,
+                    tag,
                     amount,
                 }
             ],
@@ -270,6 +271,7 @@ export const transferAmount = async (req: UserRequest, res: Response) => {
                     mode: "RECEIVED",
                     from: userId,
                     to,
+                    tag,
                     amount,
                 }
             ],
