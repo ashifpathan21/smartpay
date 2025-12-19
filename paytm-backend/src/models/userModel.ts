@@ -1,4 +1,4 @@
-import mongoose, {  Schema, Types } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
 const userSchema = new Schema({
     firstName: {
@@ -27,16 +27,11 @@ const userSchema = new Schema({
         select: false,
         minLength: 6
     },
-    amount: {
-        type: Number,
-        default: 100
+    account: {
+        type: Types.ObjectId,
+        ref: "account"
     },
-    transactions: [
-        {
-            type: Types.ObjectId,
-            ref: "transaction"
-        }
-    ]
+    createdAt: { type: Date, default: Date.now() }
 })
 
 export default mongoose.model("user", userSchema)

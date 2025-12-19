@@ -7,11 +7,13 @@ import type { UserRequest } from "../types/express/index.js";
 import { JWT_SECRET } from "../config.js";
 import { StatusCodes } from "http-status-codes";
 
+
+
 export const SignIn = async (req: Request, res: Response) => {
     try {
         const { username, password, firstName, lastName } = req.body;
         if (!username || !password || !firstName) {
-            return res.status(StatusCodes.NO_CONTENT).json({
+            return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
                 message: "Fields are missing"
             })
@@ -25,12 +27,15 @@ export const SignIn = async (req: Request, res: Response) => {
         }
         //salting to prevent the same same hash
         const hashPass = await bcrypt.hash(`${username}${password}`, 16);
+
+
         const user = await UserModel.create({
             firstName,
             lastName,
             username,
             password: hashPass
         })
+
         const token = jwt.sign({ id: user._id }, JWT_SECRET, {
             expiresIn: "2d"
         });
@@ -62,7 +67,7 @@ export const Login = async (req: Request, res: Response) => {
     try {
         const { username, password } = req.body;
         if (!username || !password) {
-            return res.status(StatusCodes.NO_CONTENT).json({
+            return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
                 message: "Fields are Missing"
             })
@@ -76,7 +81,7 @@ export const Login = async (req: Request, res: Response) => {
             })
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(`${username}${password}`, user.password);
         if (!isMatch) {
             return res.status(StatusCodes.UNAUTHORIZED).json({
                 success: false,

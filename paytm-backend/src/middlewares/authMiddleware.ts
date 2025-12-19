@@ -11,7 +11,7 @@ export const authMiddleware = async (req: UserRequest, res: Response, next: Next
     try {
         const token = req.headers.authorization?.split(" ")[1];
         if (!token) {
-            return res.status(StatusCodes.NO_CONTENT).json({
+            return res.status(StatusCodes.UNAUTHORIZED).json({
                 success: false,
                 message: "Token is Missing"
             })
