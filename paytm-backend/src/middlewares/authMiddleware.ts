@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 import type { UserRequest } from "../types/express/index.js";
 import { JWT_SECRET } from "../config.js";
 import mongoose from "mongoose";
-
+import { StatusCodes } from "http-status-codes";
 
 
 
@@ -11,15 +11,15 @@ export const authMiddleware = async (req: UserRequest, res: Response, next: Next
     try {
         const token = req.headers.authorization?.split(" ")[1];
         if (!token) {
-            return res.status(400).json({
+            return res.status(StatusCodes.NO_CONTENT).json({
                 success: false,
                 message: "Token is Missing"
             })
         }
 
-        const decoded  = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         if (!decoded) {
-            return res.status(501).json({
+            return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
                 message: "Invalid Token"
             })
@@ -28,7 +28,7 @@ export const authMiddleware = async (req: UserRequest, res: Response, next: Next
         next()
 
     } catch (error) {
-        return res.status(501).json({
+        return res.status(StatusCodes.UNAUTHORIZED).json({
             success: false,
             message: "Unauthorized"
         })
