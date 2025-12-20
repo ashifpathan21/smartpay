@@ -22,7 +22,6 @@ const Pay = () => {
     toast.error("Something Went Wrong");
     navigate("/");
   }
-  console.log(friend);
 
   const payToFriend = async () => {
      dispatch(setLoading());

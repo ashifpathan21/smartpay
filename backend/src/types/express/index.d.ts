@@ -1,8 +1,7 @@
-import type { Request } from "express"
-import type { Types } from "mongoose"
+import { Request } from "express";
 
 export interface UserRequest extends Request {
-    user?: {
-        id: Types.ObjectId
-    }
+  user?: {
+    id: string;
+  };
 }

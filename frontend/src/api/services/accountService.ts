@@ -42,10 +42,8 @@ export const transferMoney = (token: String, data: TRANSER_DATA, removeLoading: 
     const toastId = toast.loading("Transfering Money")
     try {
         const res = await apiConnector({ method: "POST", url: ACCOUNT_ENDPOINTS.TRANSFER_AMOUNT, data, headers: { Authorization: `Bearer ${token}` } });
-        console.log(res)
         toast.success(res.data.message);
     } catch (error: any) {
-        console.log(error)
         toast.error(error.response.message)
     } finally {
         navigate("/")

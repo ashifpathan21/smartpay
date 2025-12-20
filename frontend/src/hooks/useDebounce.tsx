@@ -19,31 +19,3 @@ export function useDebounce<T>(value: T, delay: number): T {
 }
 
 
-
-// Example usage in a component (App.tsx)
-const App = () => {
-  const [inputValue, setInputValue] = useState('');
-  // Debounce the inputValue with a 500ms delay
-  const debouncedSearchTerm = useDebounce(inputValue, 500);
-
-  // Use useEffect to perform an action (e.g., API call) when the debounced value changes
-  useEffect(() => {
-    if (debouncedSearchTerm) {
-      // Perform your API call or expensive operation here
-      console.log('Fetching data for:', debouncedSearchTerm);
-    }
-  }, [debouncedSearchTerm]); // Only runs when debouncedSearchTerm is updated
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
-
-  return (
-    <input
-      type="text"
-      placeholder="Type to search..."
-      onChange={handleChange}
-      value={inputValue}
-    />
-  );
-};

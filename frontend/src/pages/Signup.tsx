@@ -42,7 +42,6 @@ const Signup = () => {
   const debouncedSearchTerm = useDebounce(data.username, 500);
   
   const search = async (debouncedSearchTerm: string) => {
-    console.log("Fetching data for:", debouncedSearchTerm);
     const res = await findUsername(debouncedSearchTerm);
     setResponse(res);
   };

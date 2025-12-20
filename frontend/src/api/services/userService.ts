@@ -41,7 +41,6 @@ export const login = (data: LOG_IN_DATA, navigate: NavigateFunction, removeLoadi
     try {
         const response: AxiosResponse = await apiConnector({ method: "POST", url: USER_ENDPOINTS.LOGIN, data });
         toast.success(response.data.message);
-        console.log(response)
         dispatch(setToken(response.data.data));
         navigate('/')
     } catch (error: any) {
