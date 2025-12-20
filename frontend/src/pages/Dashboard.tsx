@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const { user, token } = useSelector((state: Store) => state.user);
   const [showBalance, setShowBalance] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [query, setQuery] = useState("");
   const [balance, setBalance] = useState();
   const [users, setUsers] = useState<User[]>([]);
@@ -25,9 +26,11 @@ const Dashboard = () => {
   const debouncedSearchTerm = useDebounce(query, 500);
 
   const fetchBalance = async () => {
+    setLoading(true);
     const res = await getBalance(token);
     setBalance(res);
     setShowBalance(true);
+    setLoading(false);
   };
 
   const createAc = async () => {
@@ -68,7 +71,7 @@ const Dashboard = () => {
                   View Transcations
                 </Button>
                 {!showBalance ? (
-                  <Button onClick={fetchBalance} className="" variant="outline">
+                  <Button disabled={loading} onClick={fetchBalance} className="" variant="outline">
                     Check Balance
                   </Button>
                 ) : (

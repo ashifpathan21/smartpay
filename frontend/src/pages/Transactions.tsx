@@ -58,7 +58,7 @@ const Transactions = () => {
                 <div className="flex flex-col text-sm items-center gap-2 ">
                   <ArrowUpIcon
                     className={`${
-                      transaction.mode === "RECEIVED" ? "rotate-180 " : ""
+                      transaction.mode === "RECEIVED" ? "rotate-180 text-green-400 " : "text-red-400 "
                     }`}
                   />
                 </div>
